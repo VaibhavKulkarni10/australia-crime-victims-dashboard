@@ -4,8 +4,7 @@
 This project presents an interactive dashboard analyzing data from the Australian Bureau of Statistics on crime victims, focusing on Sexual Assault incidents between 2011 and 2021. While Australia is often regarded as one of the safest countries globally, this dashboard provides a detailed examination of crime statistics to explore if this perception aligns with the data. The analysis covers various crimes, with a particular emphasis on Sexual Assault and its impact on society.
 
 ## Dashboard Features
-* **Crime Categories**
-The dashboard includes data on various types of crimes:
+* **Crime Categories:** The dashboard includes data on various types of crimes:
     * Homicide Offences
     * Assault
     * Sexual Assault
@@ -14,8 +13,8 @@ The dashboard includes data on various types of crimes:
     * Blackmail
     * Unlawful Entry with Intent
     * Motor Vehicle Theft
-* Focus on Sexual Assault: The dashboard highlights Sexual Assault cases, offering insights into trends, demographics, and societal impacts. It aims to shed light on the realities of sexual violence and the actions taken to address it.
-* Interactive Visualization: Using flexdashboard and shiny, the dashboard provides interactive and user-friendly visualizations, allowing users to explore data across different dimensions and time periods.
+* **Focus on Sexual Assault:** The dashboard highlights Sexual Assault cases, offering insights into trends, demographics, and societal impacts. It aims to shed light on the realities of sexual violence and the actions taken to address it.
+* **Interactive Visualization:** Using flexdashboard and shiny, the dashboard provides interactive and user-friendly visualizations, allowing users to explore data across different dimensions and time periods.
 
 ## How to Use
 * **Access the Dashboard:** The dashboard is hosted online. Click the link to access it and explore the visualizations and insights.
