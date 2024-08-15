@@ -1,0 +1,1023 @@
+---
+title: "Sexual Assualts - Victims Records (2011 - 2021)"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+# Dashboard Overview
+Australia is considered as one of the safest countries in comparison to most countries, ranking 27th in the entire world. Hence, we must assume that the data should back it up as well but the story is a complete turn-around when we look at the data from Australian Bureau of Statistics for the Crime Victims Statistics for the last decade, starting from year 2011 till 2021 covering the following crimes:
+
+- Homicide Offences
+- Assault
+- Sexual Assault
+- Kidnapping
+- Robbery
+- Blackmail
+- Unlawful Entry with Intent
+- Motor Vehicle Theft
+
+Each topics narrates a different story in itself but we have put in more visual emphasis on the topic of Sexual Assault covering various topics and it's impact on the people living in the society, and the actions taken against it as displayed in further tabs.
+
+Hence, I would like to start the story by asking a question, **Is Australia really a safe country to live in**?
+
+**Reference**
+
+-   Australian Bureau of Statistics. (2022). Recorded Crime - Victims. <https://www.abs.gov.au/statistics/people/crime-and-justice/recorded-crime-victims/2021#data-downloads>
+
+# Total Number of Crime Victims per Australian State
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(readxl)
+library(plotly)
+library(shiny)
+
+CrimeCount <- read_excel("CrimeCount.xlsx")
+```
+
+## Sidebar {.sidebar}
+
+```{r}
+#Setting the values for the drop-down list
+selectInput(inputId = "dropdown", label = "Select State:", choices = unique(CrimeCount$State))
+```
+
+## Column {data-width="600"}
+
+### Total of Crimes
+
+```{r}
+valueBox("4,310,601", caption = "Total Number of Crimes Victims for All States - Year 2011 to Year 2021 ", color = "lightblue")
+
+```
+
+### Total of Crimes
+
+```{r}
+valueBox("2,11,054", caption = "Total Number of Sexual Assaults for All States - Year 2011 to Year 2021 ", color = "lightblue")
+
+```
+
+### Total Count of Homicide Offences, Kidnapping, Blackmail Offences from 2011-2021
+
+```{r}
+#For Victoria State
+renderPlotly({
+  #To select the state from the drop-down list
+  state_selected <- input$dropdown
+  
+    # Based on the selected state, we have plotted the following graphs using plotly
+  if (state_selected == "Victoria") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Victoria" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Victoria'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	
+	}
+  
+  else if (state_selected == "New South Wales") 
+    {
+    CrimeCount <- CrimeCount[CrimeCount$State == "New South Wales" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in New South Wales'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+  
+  else if (state_selected == "Queensland") 
+    {
+    CrimeCount <- CrimeCount[CrimeCount$State == "Queensland" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Queensland'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+  
+  else if (state_selected == "South Australia") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "South Australia" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in South Australia'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Western Australia") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Western Australia" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Western Australia'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Tasmania") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Tasmania" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Tasmania'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Northern Territory") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Northern Territory" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Northern Territory'), legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Australian Capital Territory") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Australian Capital Territory" & CrimeCount$Offence %in% c("Homicide Offences","Kidnapping","Blackmail"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar",  color = ~CrimeCount$Offence, showlegend = TRUE) %>%
+  layout(plot_bgcolor = "#e2ecf4", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Australian Capital Territory'), legend = list(title=list(text='<b> Type of Offences </b>')))
+  }
+  
+  })
+
+  
+```
+
+## Column {data-width="400"}
+
+### Total Count of Sexual Assaults from 2011-2021
+
+```{r}
+#For Victoria State
+renderPlotly({
+  # Get the selected value from the dropdown
+  state_selected <- input$dropdown
+  
+    # Generate data based on the selected graph
+  if (state_selected == "Victoria") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Victoria" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", showlegend = TRUE, width = 500, color = I("blue")) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in Victoria'))
+	}
+  
+  else if (state_selected == "New South Wales") 
+    {
+    CrimeCount <- CrimeCount[CrimeCount$State == "New South Wales" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", showlegend = TRUE, width = 500, color = I("blue")) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in NSW'))
+	}
+  
+  else if (state_selected == "Queensland") 
+    {
+    CrimeCount <- CrimeCount[CrimeCount$State == "Queensland" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", color = I("blue"), showlegend = TRUE, width = 500) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in Queensland'))
+	}
+  
+  else if (state_selected == "South Australia") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "South Australia" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", color = I("blue"), showlegend = TRUE, width = 500) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in SA'))
+	}
+	
+  else if (state_selected == "Western Australia") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Western Australia" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", color = I("blue"), showlegend = TRUE, width = 500) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in WA'))
+	}
+	
+  else if (state_selected == "Tasmania") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Tasmania" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", color = I("blue"), showlegend = TRUE, width = 500) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in Tasmania'))
+	}
+	
+  else if (state_selected == "Northern Territory") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Northern Territory" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", color = I("blue"), showlegend = TRUE, width = 500) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in NT'))
+	}
+	
+  else if (state_selected == "Australian Capital Territory") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Australian Capital Territory" & CrimeCount$Offence =="Sexual Assault", ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "bar", color = I("blue"), showlegend = TRUE, width = 500) %>%
+  layout(plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Sexual Assaults in ACT'))
+	}
+  })
+
+```
+
+### Total Count of Motor Vehicle Theft, Unlawful Entry with Intent, Robbery, Assault from 2011-2021
+
+```{r}
+#For Victoria State
+renderPlotly({
+  # Get the selected value from the dropdown
+  state_selected <- input$dropdown
+  
+    # Generate data based on the selected graph
+  if (state_selected == "Victoria") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Victoria" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Victoria'),legend = list(title=list(text='<b> Type of Offences </b>')))
+  }
+  
+  else if (state_selected == "New South Wales") 
+    {
+    CrimeCount <- CrimeCount[CrimeCount$State == "New South Wales" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in NSW'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+  
+  else if (state_selected == "Queensland") 
+    {
+    CrimeCount <- CrimeCount[CrimeCount$State == "Queensland" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Queensland'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+  
+  else if (state_selected == "South Australia") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "South Australia" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in SA'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Western Australia") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Western Australia" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in WA'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Tasmania") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Tasmania" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in Tasmania'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Northern Territory") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Northern Territory" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in NT'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+	
+  else if (state_selected == "Australian Capital Territory") 
+    {
+	CrimeCount <- CrimeCount[CrimeCount$State == "Australian Capital Territory" & CrimeCount$Offence %in% c("Motor Vehicle Theft", "Unlawful Entry with Intent","Robbery","Assault"), ]
+	plot_ly(CrimeCount, x = ~CrimeCount$Year, y = ~CrimeCount$Count, type = "scatter",  color = ~CrimeCount$Offence, showlegend = TRUE, mode = 'lines',width = 500) %>%
+  layout(xaxis = list(title = 'Year'), 
+         yaxis = list(title = 'Count of Offences in ACT'),legend = list(title=list(text='<b> Type of Offences </b>')))
+	}
+  
+})
+```
+
+# Crime - Sexual Assault 
+
+```{r}
+SexualAssaultVic <- read_excel("SexualAssaultData.xlsx", sheet = "Victimisation Rates")
+SexualAssaultLoc <- read_excel("SexualAssaultData.xlsx", sheet = "Locations")
+SexualAssaultInv <- read_excel("SexualAssaultData.xlsx", sheet = "Investigation")
+SexualAssaultGen <- read_excel("SexualAssaultData.xlsx", sheet = "Gender")
+```
+
+## Sidebar {.sidebar}
+
+```{r}
+#Setting the values for the drop-down list
+selectInput(inputId = "drop", label = "Select State:", choices = unique(SexualAssaultVic$State))
+
+selectInput(inputId = "droploc", label = "Select Location:", choices= c("All","Residential","Community","Other Location"))
+
+selectInput(inputId = "dropgen", label = "Select Gender:", choices= c("Both","Male","Female"))
+```
+
+
+## Column {data-width="500"}
+
+### Victimisation Rates or Number of People experiencing Sexual Assault
+
+```{r}
+
+renderPlotly({
+  #To select the state from the drop-down list
+  state_selec <- input$drop
+  
+    # Based on the selected state, we have plotted the following graphs using plotly
+  if (state_selec == "Victoria") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "Victoria", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "New South Wales") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "New South Wales", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in New South Wales',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "Queensland") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "Queensland", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "South Australia") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "South Australia", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in South Australia',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "Western Australia") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "Western Australia", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in Western Australia',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "Tasmania") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "Tasmania", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "Northern Territory", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in Northern Territory',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory") 
+    {
+	SexualAssaultVic <- SexualAssaultVic[SexualAssaultVic$State == "Australian Capital Territory", ]
+	plot_ly(SexualAssaultVic, x = ~SexualAssaultVic$Year, y = ~SexualAssaultVic$Count, type = "bar", showlegend = TRUE, color = I("violet")) %>%
+  layout(title = 'Victimisation Rate in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Year'),
+         yaxis = list(title = 'Victimisation Rate Count'))
+	
+  }
+  
+})
+```
+
+### Occurences of Sexual Assualt based on Locations
+
+```{r}
+
+renderPlotly({
+  #To select the state from the drop-down list
+  state_selec <- input$drop
+  state_loc <- input$droploc
+  
+    # Based on the selected state, we have plotted the following graphs using plotly
+  if (state_selec == "Victoria" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Victoria" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = ' Location where Sexual Assault occurred in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Victoria" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Victoria" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "Victoria" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Victoria" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Community Location where Sexual Assault occurred in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Victoria" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Victoria" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Other Location where Sexual Assault occurred in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "New South Wales" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "New South Wales" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Locations where Sexual Assault occurred in NSW',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "New South Wales" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "New South Wales" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in NSW',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "New South Wales" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "New South Wales" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE)  %>%
+  layout(title = 'Community Location where Sexual Assault occurred in NSW',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "New South Wales" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "New South Wales" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Other Location where Sexual Assault occurred in NSW',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Queensland" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Queensland" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Locations where Sexual Assault occurred in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Queensland" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Queensland" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "Queensland" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Queensland" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Community Location where Sexual Assault occurred in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Queensland" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Queensland" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Other Location where Sexual Assault occurred in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "South Australia" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "South Australia" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Locations where Sexual Assault occurred in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "South Australia" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "South Australia" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "South Australia" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "South Australia" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Community Location where Sexual Assault occurred in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "South Australia" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "South Australia" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Other Location where Sexual Assault occurred in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Western Australia" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Western Australia" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Locations where Sexual Assault occurred in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Western Australia" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Western Australia" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "Western Australia" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Western Australia" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Community Location where Sexual Assault occurred in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Western Australia" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Western Australia" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE)  %>%
+  layout(title = 'Other Location where Sexual Assault occurred in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Tasmania" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Tasmania" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Locations where Sexual Assault occurred in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Tasmania" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Tasmania" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE)  %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "Tasmania" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Tasmania" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Community Location where Sexual Assault occurred in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Tasmania" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Tasmania" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Other Location where Sexual Assault occurred in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Northern Territory" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Locations where Sexual Assault occurred in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Northern Territory" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "Northern Territory" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Northern Territory" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Community Location where Sexual Assault occurred in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Northern Territory" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Other Location where Sexual Assault occurred in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" & state_loc == "All" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Australian Capital Territory" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE)  %>%
+  layout(title = 'Locations where Sexual Assault occurred in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" & state_loc == "Residential" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Australian Capital Territory" & SexualAssaultLoc$Location == "Residential" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE) %>%
+  layout(title = 'Residential Location where Sexual Assault occurred in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+   else if (state_selec == "Australian Capital Territory" & state_loc == "Community" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Australian Capital Territory" & SexualAssaultLoc$Location == "Community" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE)  %>%
+  layout(title = 'Community Location where Sexual Assault occurred in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" & state_loc == "Other Location" ) 
+    {
+	SexualAssaultLoc <- SexualAssaultLoc[SexualAssaultLoc$State == "Australian Capital Territory" & SexualAssaultLoc$Location == "Other Location" , ]
+	plot_ly(SexualAssaultLoc, x = ~SexualAssaultLoc$Location, y = ~SexualAssaultLoc$Count, type = "bar", showlegend = TRUE)  %>%
+  layout(title = 'Other Location where Sexual Assault occurred in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Location'),
+         yaxis = list(title = 'Count based on Location'))
+  }
+
+  
+})
+```
+
+## Column {data-width="500"}
+
+### Outcomes of the Ongoing Investigation on the Sexual Assault Cases
+
+```{r}
+renderPlotly({
+  #To select the state from the drop-down list
+  state_selec <- input$drop
+  
+    # Based on the selected state, we have plotted the following graphs using plotly
+  if (state_selec == "Victoria" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "Victoria" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "New South Wales" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "New South Wales" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in NSW',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "Queensland" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "Queensland" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "South Australia" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "South Australia" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "Western Australia" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "Western Australia" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "Tasmania" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "Tasmania" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "Northern Territory" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" ) 
+    {
+	SexualAssaultInv <- SexualAssaultInv[SexualAssaultInv$State == "Australian Capital Territory" , ]
+	plot_ly(SexualAssaultInv, x = ~SexualAssaultInv$Count, y = ~SexualAssaultInv$Investigation, type = "bar", showlegend = TRUE, orientation = 'h', color = I("purple")) %>%
+  layout(title = 'Outcome of Investigation on Sexual Assault in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Count'),
+         yaxis = list(title = 'Investigation Type'))
+	
+  }
+  
+  
+})
+
+
+```
+
+### Impact of Sexual Assualt on the Population of Australia based on Gender
+
+```{r}
+
+renderPlotly({
+  #To select the state from the drop-down list
+  state_selec <- input$drop
+  select_gender<- input$dropgen
+  
+    # Based on the selected state, we have plotted the following graphs using plotly
+  if (state_selec == "New South Wales" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "New South Wales" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault on in New South Wales',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "New South Wales" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "New South Wales" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in New South Wales',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "New South Wales" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "New South Wales" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in New South Wales',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Victoria" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Victoria" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Victoria" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Victoria" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Victoria" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Victoria" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in Victoria',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Queensland" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Queensland" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Queensland" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Queensland" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count')) 
+	
+  }
+  
+  else if (state_selec == "Queensland" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Queensland" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in Queensland',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "South Australia" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "South Australia" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "South Australia" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "South Australia" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "South Australia" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "South Australia" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in SA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  
+   else if (state_selec == "Western Australia" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Western Australia" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Western Australia" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Western Australia" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Western Australia" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Western Australia" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in WA',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+   else if (state_selec == "Tasmania" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Tasmania" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Tasmania" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Tasmania" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Tasmania" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Tasmania" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in Tasmania',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Northern Territory" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Northern Territory" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Northern Territory" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Northern Territory" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in NT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" & select_gender == "Both") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Australian Capital Territory" , ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE) %>%
+  layout(title = 'Sexual Assault in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" & select_gender == "Male") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Australian Capital Territory" & SexualAssaultGen$Gender == "Male", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Males in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+  else if (state_selec == "Australian Capital Territory" & select_gender == "Female") 
+    {
+	SexualAssaultGen <- SexualAssaultGen[SexualAssaultGen$State == "Australian Capital Territory" & SexualAssaultGen$Gender == "Female", ]
+	plot_ly(SexualAssaultGen, x = ~SexualAssaultGen$Age, y = ~SexualAssaultGen$Count, type = "bar",  color = ~SexualAssaultGen$Gender, showlegend = TRUE, height = 300) %>%
+  layout(title = 'Sexual Assault on Females in ACT',plot_bgcolor = "#f9fce7", xaxis = list(title = 'Gender',tickangle=90),
+         yaxis = list(title = 'Count'))
+	
+  }
+  
+})
+```
+
